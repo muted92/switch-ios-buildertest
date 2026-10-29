@@ -1,4 +1,4 @@
-name: Build BotW 60FPS IPA (Base + 1.9)
+name: Build BotW IPA
 
 on:
   workflow_dispatch:
@@ -23,13 +23,11 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install lz4 capstone fonttools nsz "backports.zstd; python_version < '3.14'"
 
-      - name: Download Base Game and Update 1.9.0
+      - name: Download Base Game
         run: |
           mkdir -p games/botw
           echo "Downloading base game..."
           curl -L "https://drive.usercontent.google.com/download?id=1N_o0m1CdxMSSLIfIutmKNT1lhJP8KPpT&confirm=t" -o games/botw/base.nsp
-          echo "Downloading update 1.9.0..."
-          curl -L "https://drive.usercontent.google.com/download?id=1x49N5nCeyiK3WNWNHO3fErdT56L1P1m7&confirm=t" -o games/botw/update.nsp
 
       - name: Run nxnative build script
         run: |
@@ -39,5 +37,5 @@ jobs:
       - name: Upload generated IPA as a build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: botw-60fps-ipa
+          name: botw-base-ipa
           path: games/botw/*.ipa
